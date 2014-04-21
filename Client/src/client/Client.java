@@ -2,7 +2,6 @@ package client;
 
 import java.util.Scanner;
 
-import serverConnect.OutputStream;
 import serverConnect.ServerConnection;
 
 public class Client {
@@ -24,14 +23,11 @@ public class Client {
 	public static void main(String[] args) {
 
 		Scanner userinput = new Scanner(System.in);
-		Client client = new Client();
-		ServerConnection server = client.getServer();
-
 		while (true) {
 			String message = userinput.nextLine();
-			server.getOut().setMessage(message);
-			synchronized (server.getOut()) {
-				server.getOut().notify();
+			ServerConnection.getOut().setMessage(message);
+			synchronized (ServerConnection.getOut()) {
+				ServerConnection.getOut().notify();
 			}
 		}
 
