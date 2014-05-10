@@ -30,6 +30,5 @@ public class Client {
 				ServerConnection.getOut().notify();
 			}
 		}
-
 	}
 }

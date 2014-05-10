@@ -30,11 +30,6 @@ public class ServerConnection {
 		} catch (IOException e) {
 			System.out.println("IOException:\n" + e.toString());
 			e.printStackTrace();
-		} finally {/*
-					 * if (server != null) { try { server.close(); } catch
-					 * (IOException e) { System.out.println("IOException:\n" +
-					 * e.toString()); e.printStackTrace(); } }
-					 */
 		}
 	}
 
