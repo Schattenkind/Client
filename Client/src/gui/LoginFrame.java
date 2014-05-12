@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
@@ -11,6 +10,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
+import serverConnect.ServerConnection;
+
 public class LoginFrame implements ActionListener {
 
 	private JFrame frmLogin;
@@ -20,26 +21,11 @@ public class LoginFrame implements ActionListener {
 	private JButton btnLogin;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginFrame window = new LoginFrame();
-					window.frmLogin.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
 	public LoginFrame() {
 		initialize();
+		this.frmLogin.setVisible(true);
 	}
 
 	/**
@@ -87,8 +73,15 @@ public class LoginFrame implements ActionListener {
 		if (e.getSource() == btnRegisterHere) {
 			new RegisterFrame();
 		} else if (e.getSource() == btnLogin) {
+			ServerConnection server = new ServerConnection("192.168.178.32",
+					1234);
+			int a = server.establishConnection();
+			if (a == 0) {
 
+			} else {
+				GUI.errorDialog("Connection error!",
+						"Server is not reachable!\nPlease check your internet connection.");
+			}
 		}
-
 	}
 }

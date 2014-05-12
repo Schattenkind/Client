@@ -6,15 +6,20 @@ import java.net.UnknownHostException;
 
 public class ServerConnection {
 
+	public final static int UnknownHostException = 1;
+	public final static int IOException = 2;
 	private static InputStream in;
 	private static OutputStream out;
 	private static Socket server;
+	private String ip;
+	private int port;
 
 	public ServerConnection(String ip, int port) {
-		establishConnection(ip, port);
+		this.ip = ip;
+		this.port = port;
 	}
 
-	public void establishConnection(String ip, int port) {
+	public int establishConnection() {
 
 		try {
 			ServerConnection.server = new Socket(ip, port);
@@ -27,10 +32,13 @@ public class ServerConnection {
 		} catch (UnknownHostException e) {
 			System.out.println("UnkownHostException:\n" + e.toString());
 			e.printStackTrace();
+			return UnknownHostException;
 		} catch (IOException e) {
 			System.out.println("IOException:\n" + e.toString());
 			e.printStackTrace();
+			return IOException;
 		}
+		return 0;
 	}
 
 	public static InputStream getIn() {
