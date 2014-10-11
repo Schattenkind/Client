@@ -10,7 +10,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
-import serverConnect.ServerConnection;
+import client.Client;
 
 public class LoginFrame implements ActionListener {
 
@@ -26,6 +26,14 @@ public class LoginFrame implements ActionListener {
 	public LoginFrame() {
 		initialize();
 		this.frmLogin.setVisible(true);
+	}
+
+	public JFrame getFrame() {
+		return frmLogin;
+	}
+
+	public void setFrame(JFrame frmLogin) {
+		this.frmLogin = frmLogin;
 	}
 
 	/**
@@ -73,15 +81,8 @@ public class LoginFrame implements ActionListener {
 		if (e.getSource() == btnRegisterHere) {
 			new RegisterFrame();
 		} else if (e.getSource() == btnLogin) {
-			ServerConnection server = new ServerConnection("192.168.178.32",
-					1234);
-			int a = server.establishConnection();
-			if (a == 0) {
-
-			} else {
-				GUI.errorDialog("Connection error!",
-						"Server is not reachable!\nPlease check your internet connection.");
-			}
+			Client.sendLoginRequest(textField.getText(), new String(
+					passwordField.getPassword()));
 		}
 	}
 }

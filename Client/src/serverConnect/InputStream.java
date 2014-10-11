@@ -1,9 +1,13 @@
 package serverConnect;
 
+import gui.GUI;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+
+import client.Client;
 
 public class InputStream implements Runnable {
 
@@ -22,10 +26,9 @@ public class InputStream implements Runnable {
 			while (true) {
 				String incoming = in.readLine();
 
-				System.out.println(incoming);
+				processInput(incoming);
 			}
 		} catch (IOException e) {
-			System.out.println("IOException:\n" + e.toString());
 			e.printStackTrace();
 		}
 
@@ -39,4 +42,21 @@ public class InputStream implements Runnable {
 		this.in = in;
 	}
 
+	private void processInput(String incoming) {
+		String[] split = incoming.split(";");
+		String command = split[0].toUpperCase();
+		if (command.equals("MESSAGE")) {
+
+		} else if (command.equals("LOGIN")) {
+			if (split[1].equals("TRUE")) {
+				Client.getLogin().getFrame().dispose();
+				GUI.infoDialog("Success", "Login was correct!");
+			} else {
+				GUI.infoDialog("Failure",
+						"Login was incorrect, please try again!");
+			}
+		} else if (command.equals("PING")) {
+
+		}
+	}
 }

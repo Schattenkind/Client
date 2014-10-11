@@ -10,6 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+import serverConnect.ServerConnection;
+import javax.swing.JPasswordField;
+
 public class RegisterFrame implements ActionListener {
 
 	private JFrame frmRegister;
@@ -20,6 +23,10 @@ public class RegisterFrame implements ActionListener {
 	private JTextField textField_nickName;
 	private JButton btnCancel;
 	private JButton btnRegister;
+	private JPasswordField passwordField;
+	private JLabel lblPassword;
+	private JPasswordField passwordField_1;
+	private JLabel lblConfirmPassword;
 
 	/**
 	 * Create the application.
@@ -35,10 +42,10 @@ public class RegisterFrame implements ActionListener {
 	private void initialize() {
 		frmRegister = new JFrame();
 		frmRegister.setTitle("Register");
-		frmRegister.setBounds(100, 100, 450, 200);
+		frmRegister.setBounds(100, 100, 450, 300);
 		frmRegister.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmRegister.setResizable(false);
-		frmRegister.getContentPane().setLayout(new GridLayout(6, 2, 10, 10));
+		frmRegister.getContentPane().setLayout(new GridLayout(8, 2, 10, 10));
 
 		JLabel lblSurname = new JLabel("Surname:");
 		frmRegister.getContentPane().add(lblSurname);
@@ -75,6 +82,18 @@ public class RegisterFrame implements ActionListener {
 		frmRegister.getContentPane().add(textField_nickName);
 		textField_nickName.setColumns(10);
 
+		lblPassword = new JLabel("Password:");
+		frmRegister.getContentPane().add(lblPassword);
+
+		passwordField = new JPasswordField();
+		frmRegister.getContentPane().add(passwordField);
+
+		lblConfirmPassword = new JLabel("Confirm Password:");
+		frmRegister.getContentPane().add(lblConfirmPassword);
+
+		passwordField_1 = new JPasswordField();
+		frmRegister.getContentPane().add(passwordField_1);
+
 		btnCancel = new JButton("Cancel");
 		frmRegister.getContentPane().add(btnCancel);
 		btnCancel.addActionListener(this);
@@ -89,8 +108,23 @@ public class RegisterFrame implements ActionListener {
 		if (e.getSource() == btnCancel) {
 			this.frmRegister.dispose();
 
+		} else if (e.getSource() == btnRegister) {
+			if (checkCorrectness()) {
+				ServerConnection.getOut().addUser(textField_surname.getText(),
+						textField_name.getText(),
+						textField_birthdate.getText(),
+						textField_eMail.getText(),
+						textField_nickName.getText(), "1234");
+			}
 		}
 
+	}
+
+	private boolean checkCorrectness() {
+		if (new String(passwordField.getPassword()).equals(new String(passwordField_1.getPassword()))){
+			return true;
+		}
+		return false;
 	}
 
 }

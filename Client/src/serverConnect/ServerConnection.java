@@ -30,11 +30,9 @@ public class ServerConnection {
 			new Thread(ServerConnection.getOut()).start();
 
 		} catch (UnknownHostException e) {
-			System.out.println("UnkownHostException:\n" + e.toString());
 			e.printStackTrace();
 			return UnknownHostException;
 		} catch (IOException e) {
-			System.out.println("IOException:\n" + e.toString());
 			e.printStackTrace();
 			return IOException;
 		}
@@ -63,5 +61,12 @@ public class ServerConnection {
 
 	public static void setServer(Socket server) {
 		ServerConnection.server = server;
+	}
+
+	public static void sendMessage(String message) {
+		ServerConnection.getOut().setMessage(message);
+		synchronized (ServerConnection.getOut()) {
+			ServerConnection.getOut().notify();
+		}
 	}
 }
