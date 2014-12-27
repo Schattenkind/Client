@@ -5,20 +5,23 @@ import javax.swing.JFrame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
 import serverConnect.ServerConnection;
+
 import javax.swing.JPasswordField;
+import javax.swing.JPanel;
+import javax.swing.JComboBox;
 
 public class RegisterFrame implements ActionListener {
 
 	private JFrame frmRegister;
 	private JTextField textField_surname;
 	private JTextField textField_name;
-	private JTextField textField_birthdate;
 	private JTextField textField_eMail;
 	private JTextField textField_nickName;
 	private JButton btnCancel;
@@ -27,6 +30,10 @@ public class RegisterFrame implements ActionListener {
 	private JLabel lblPassword;
 	private JPasswordField passwordField_1;
 	private JLabel lblConfirmPassword;
+	private JPanel panel;
+	private JComboBox<String> comboDay;
+	private JComboBox<String> comboMonth;
+	private JComboBox<String> comboYear;
 
 	/**
 	 * Create the application.
@@ -40,9 +47,25 @@ public class RegisterFrame implements ActionListener {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		// set listbox values for birth date
+		int amountOfYears = 50;
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		String[] years = new String[amountOfYears];
+		for (int i = 0; i < amountOfYears; i++) {
+			int year = currentYear - amountOfYears + i;
+			years[i] = Integer.toString(year);
+		}
+		String[] months = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+				"11", "12" };
+
+		String[] days = new String[31];
+		for (int i = 0; i < 31; i++) {
+			days[i] = Integer.toString(i + 1);
+		}
+
 		frmRegister = new JFrame();
 		frmRegister.setTitle("Register");
-		frmRegister.setBounds(100, 100, 450, 300);
+		frmRegister.setBounds(800, 200, 450, 360);
 		frmRegister.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmRegister.setResizable(false);
 		frmRegister.getContentPane().setLayout(new GridLayout(8, 2, 10, 10));
@@ -61,12 +84,23 @@ public class RegisterFrame implements ActionListener {
 		frmRegister.getContentPane().add(textField_name);
 		textField_name.setColumns(10);
 
-		JLabel lblBirthdate = new JLabel("Birthdate: (TT/MM/JJJJ)");
+		JLabel lblBirthdate = new JLabel("Birth date:");
 		frmRegister.getContentPane().add(lblBirthdate);
 
-		textField_birthdate = new JTextField();
-		frmRegister.getContentPane().add(textField_birthdate);
-		textField_birthdate.setColumns(10);
+		panel = new JPanel();
+		frmRegister.getContentPane().add(panel);
+
+		comboDay = new JComboBox(days);
+		comboDay.setMaximumRowCount(31);
+		panel.add(comboDay);
+
+		comboMonth = new JComboBox(months);
+		comboMonth.setMaximumRowCount(12);
+		panel.add(comboMonth);
+
+		comboYear = new JComboBox(years);
+		comboYear.setMaximumRowCount(amountOfYears);
+		panel.add(comboYear);
 
 		JLabel lblEmail = new JLabel("Email:");
 		frmRegister.getContentPane().add(lblEmail);
@@ -75,7 +109,7 @@ public class RegisterFrame implements ActionListener {
 		frmRegister.getContentPane().add(textField_eMail);
 		textField_eMail.setColumns(10);
 
-		JLabel lblNickname = new JLabel("Nickname:");
+		JLabel lblNickname = new JLabel("Username:");
 		frmRegister.getContentPane().add(lblNickname);
 
 		textField_nickName = new JTextField();
@@ -109,22 +143,37 @@ public class RegisterFrame implements ActionListener {
 			this.frmRegister.dispose();
 
 		} else if (e.getSource() == btnRegister) {
+			String birthdate = comboYear.getSelectedItem() + "-"
+					+ comboMonth.getSelectedItem() + "-"
+					+ comboDay.getSelectedItem();
 			if (checkCorrectness()) {
 				ServerConnection.getOut().addUser(textField_surname.getText(),
-						textField_name.getText(),
-						textField_birthdate.getText(),
+						textField_name.getText(), birthdate,
 						textField_eMail.getText(),
-						textField_nickName.getText(), "1234");
+						textField_nickName.getText(),
+						new String(passwordField.getPassword()));
+			} else {
+				GUI.infoDialog("Password", "Password does not match!");
 			}
 		}
 
 	}
 
+	// TODO
 	private boolean checkCorrectness() {
-		if (new String(passwordField.getPassword()).equals(new String(passwordField_1.getPassword()))){
+		if (new String(passwordField.getPassword()).equals(new String(
+				passwordField_1.getPassword()))) {
 			return true;
 		}
 		return false;
+	}
+
+	public JFrame getFrmRegister() {
+		return frmRegister;
+	}
+
+	public void setFrmRegister(JFrame frmRegister) {
+		this.frmRegister = frmRegister;
 	}
 
 }

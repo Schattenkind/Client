@@ -61,8 +61,8 @@ public class OutputStream implements Runnable {
 
 	public void addUser(String surname, String name, String birthdate,
 			String email, String nickname, String pw) {
-		ServerConnection.sendMessage("NEWUSER;" + surname + ";" + name + ";"
-				+ birthdate + ";" + email + ";" + nickname + ";" + pw);
+		ServerConnection.sendMessage("NEWUSER;" + pw + ";" + nickname + ";"
+				+ email + ";" + birthdate + ";" + name + ";" + surname);
 
 	}
 }

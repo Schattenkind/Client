@@ -19,6 +19,7 @@ public class LoginFrame implements ActionListener {
 	private JPasswordField passwordField;
 	private JButton btnRegisterHere;
 	private JButton btnLogin;
+	public RegisterFrame register;
 
 	/**
 	 * Create the application.
@@ -42,7 +43,7 @@ public class LoginFrame implements ActionListener {
 	private void initialize() {
 		frmLogin = new JFrame();
 		frmLogin.setTitle("Login");
-		frmLogin.setBounds(100, 100, 400, 145);
+		frmLogin.setBounds(800, 200, 400, 145);
 		frmLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmLogin.setResizable(false);
 		frmLogin.getContentPane().setLayout(null);
@@ -79,7 +80,7 @@ public class LoginFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnRegisterHere) {
-			new RegisterFrame();
+			register = new RegisterFrame();
 		} else if (e.getSource() == btnLogin) {
 			Client.sendLoginRequest(textField.getText(), new String(
 					passwordField.getPassword()));
