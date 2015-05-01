@@ -78,7 +78,9 @@ public class InputStream implements Runnable {
 			}
 
 		} else if (command.equals("USERINFO")) {
-			
+
+		} else if (command.equals("FRIENDLIST")) {
+			Client.getUser().addFriend(new User(split[1]));
 		}
 	}
 }

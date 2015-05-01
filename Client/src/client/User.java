@@ -23,12 +23,13 @@ public class User {
 	}
 
 	public void setUserInfo(String[] info) {
-		this.username = info[1];
-		this.email = info[2];
-		this.birthdate = info[3];
-		this.name = info[4];
-		this.surname = info[5];
-		this.id = Double.valueOf(info[6]);
+		this.id = Double.valueOf(info[1]);
+		this.username = info[2];
+		this.email = info[3];
+		this.birthdate = info[4];
+		this.name = info[5];
+		this.surname = info[6];
+
 	}
 
 	public void retrieveFriendList() {
@@ -36,7 +37,7 @@ public class User {
 	}
 
 	public void sendFriendRequest(String username, String friend) {
-		
+
 	}
 
 	// setter,getter

@@ -65,4 +65,8 @@ public class OutputStream implements Runnable {
 				+ email + ";" + birthdate + ";" + name + ";" + surname);
 
 	}
+
+	public void getFriends(String user) {
+		ServerConnection.sendMessage("FRIENDLIST;" + user);
+	}
 }

@@ -42,9 +42,11 @@ public class FriendListFrame implements ActionListener {
 		mntmAddFriend = new JMenuItem("Add Friend");
 		mntmAddFriend.addActionListener(this);
 		mnOptions.add(mntmAddFriend);
-		
+
 		mntmEditProfile = new JMenuItem("Edit Profile");
+		mntmEditProfile.addActionListener(this);
 		mnOptions.add(mntmEditProfile);
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -55,9 +57,8 @@ public class FriendListFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == mntmAddFriend) {
 			GUI.inputDialog("Add Friend", "Enter the username: ");
-		} else if (e.getSource() == mntmEditProfile){
-			GUI.infoDialog(Client.getUser().getUsername(), Client.getUser().getName());
-			GUI.infoDialog("test", "test");
+		} else if (e.getSource() == mntmEditProfile) {
+			new UserInfoFrame();
 		}
 
 	}
